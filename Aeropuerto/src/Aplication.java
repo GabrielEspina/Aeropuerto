@@ -1,11 +1,15 @@
+/*
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+*/
 
-import ar.edu.ub.p3.tpi.api.Avion;;
+import ar.edu.ub.p3.aeropuerto.Aeropuerto;
+//import ar.edu.ub.p3.tpi.api.Avion;;
 
 public class Aplication {
+/*	
 	//AEROPUERTO
 	//------------------------------------------------
 	public static void main(String[] args) throws UnknownHostException, IOException {
@@ -20,5 +24,11 @@ public class Aplication {
 		}
 
 	}
-
+*/
+	public static void main(String[] args) {
+		
+		Aeropuerto aeropuerto = Aeropuerto.crearAeropuertoCfg1();
+		
+		aeropuerto.despegarAviones();
+	}
 }
