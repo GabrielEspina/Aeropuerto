@@ -39,7 +39,7 @@ public class Aeropuerto {
 		
 		this.setDespegue(new Thread(new Despegue(listaAviones)));
 		
-		this.setRecepcion(new Thread(new Recepcion()));
+		this.setRecepcion(new Thread(new Recepcion(listaAviones)));
 		
 		
 		//INICIO LOS HILOS(debe estar corriendo el trafico aereo)

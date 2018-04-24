@@ -10,7 +10,7 @@ public class Recepcion implements Runnable{
 
 	private ListaAviones listaAviones;
 	
-	public Recepcion() {
+	public Recepcion(ListaAviones listaAviones) {
 
 		setListaAviones(listaAviones);
 		

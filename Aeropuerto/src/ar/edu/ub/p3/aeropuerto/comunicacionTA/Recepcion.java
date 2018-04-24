@@ -10,7 +10,7 @@ public class Recepcion implements Runnable{
 
 	private ListaAviones listaAviones;
 	
-	public Recepcion() {
+	public Recepcion(ListaAviones listaAviones) {
 
 		setListaAviones(listaAviones);
 		
@@ -27,7 +27,7 @@ public class Recepcion implements Runnable{
 				
 				getListaAviones().agreagarAvion(avion);
 				
-				System.out.println(">Aterrizaje Exitoso");
+				System.out.println(">Aterrizaje Exitoso> " + avion.getId() + "\t " + avion.getModelo());
 				
 			} catch (ClassNotFoundException e) {
 				
