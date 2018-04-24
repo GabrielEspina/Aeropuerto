@@ -1,10 +1,9 @@
 package ar.edu.ub.p3.aeropuerto;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
 import ar.edu.ub.p3.tpi.api.Avion;
+import ar.edu.ub.p3.aeropuerto.aviones.*;
+import ar.edu.ub.p3.aeropuerto.comunicacionTA.Despegue;
+import ar.edu.ub.p3.aeropuerto.comunicacionTA.Recepcion;
 
 /**
  * La clase aeropuerto modela el comportamiento de un aeropuerto
@@ -17,78 +16,48 @@ import ar.edu.ub.p3.tpi.api.Avion;
 
 public class Aeropuerto {
 	
-	private Avion[] aviones = new Avion[0];
+	private ListaAviones listaAviones;
+	
+	private Thread recepcion;
+	
+	private Thread despegue;
 	
 	private Aeropuerto()
 	{
-		
+		setListaAviones(new ListaAviones());
 	}
 
 	public void addAvion( Avion avion ) {
-		this.setAviones( agregar( this.getAviones(), avion ) );
+		
+		getListaAviones().agreagarAvion( avion );
+		
 	}
 	
-	///////////////////////////////////////////////////////////////////////////
-	//
-	
-	private Avion[] agregar( Avion[] aviones, Avion avion ){
-		//TODO esto se debe mover a una clase utils de la API
+	public  void connectTraficoAereo() {
 		
-		Avion[] nuevosAviones= new Avion[ aviones.length + 1 ];
+		//CREO LOS HILOS DE RECEPCION Y ENVIO DE AVIONES
 		
-		//Copio los hijos
-		copiar( aviones, nuevosAviones );
+		this.setDespegue(new Thread(new Despegue(listaAviones)));
 		
-		//Agrego la persona al final
-		nuevosAviones[ nuevosAviones.length - 1 ] = avion;
-				
-		return nuevosAviones;		
-	}
-	
-	///////////////////////////////////////////////////////////////////////////
-	//
-	
-	private void copiar(Avion[] origen, Avion[] destino)
-	{
-		for( int posicion = 0; posicion < origen.length; posicion ++ )
-			destino[posicion] = origen[posicion];		
-	}	
-	
-	///////////////////////////////////////////////////////////////////////////
-	//
-	
-	public void despegarAviones() {
-		for( Avion avion : this.getAviones() )
-			this.despegar( avion );		
+		this.setRecepcion(new Thread(new Recepcion()));
+		
+		
+		//INICIO LOS HILOS(debe estar corriendo el trafico aereo)
+		
+		this.getDespegue().start();
+		
+		this.getRecepcion().start();
+		
 	}
 
-	private void despegar( Avion avion ) {
-		// TODO esto debe invocar al trafico aereo para despegar al avion
-		try (Socket so = new Socket("localhost",8888)){
-			
-			ObjectOutputStream oos  = new ObjectOutputStream( so.getOutputStream());
-			oos.writeObject( avion );
-			
-		}catch( IOException e ){
-			
-		}
-	}	
-	
-	public Avion[] getAviones() {
-		return aviones;
-	}
-
-	private void setAviones(Avion[] aviones) {
-		this.aviones = aviones;
-	}
-	
 	public static Aeropuerto crearAeropuertoCfg1()
 	{
 		Aeropuerto aeropuerto = new Aeropuerto();
 		
 		//
 		
-		aeropuerto.addAvion( new Avion("AA-B-747","Boeing-747") );
+		aeropuerto.cargarAvionesCfg1();
+		
 		
 		//
 		
@@ -101,11 +70,88 @@ public class Aeropuerto {
 		
 		//
 		
-		aeropuerto.addAvion( new Avion("AA-B-747","Boeing-747") );
+		aeropuerto.cargarAvionesCfg2();
 		
 		//
 		
 		return aeropuerto;
+	}
+	
+	
+	public void cargarAvionesCfg1() {
+		
+		//AVIONES DE AEROLINEAS ARGENTINAS
+		
+			//SERIE AIRBUS
+		
+		addAvion( new Avion("AA-A-340","Airbus A340-300") );
+		addAvion( new Avion("AA-A-330","Airbus A330-200") );
+		
+			//SERIE BOEING
+		
+		addAvion( new Avion("AA-B-737","Boeing 737-700") );
+		addAvion( new Avion("AA-B-747","Boeing-747") );
+		
+			//SERIE EMBRAER - AUSTRAL
+		
+		addAvion( new Avion("AA-E-190","Embraer 190") );
+
+	}
+	public void cargarAvionesCfg2() {
+		
+		//AVIONES DE LATAM AIRLINES
+		
+			//SERIE AIRBUS
+		
+		addAvion( new Avion("LA-A-350","Airbus 350") );
+		addAvion( new Avion("LA-A-321","Airbus 321") );
+		addAvion( new Avion("LA-A-319","Airbus 319") );
+		
+			//SERIE BOEING
+		
+		addAvion( new Avion("LA-B-747","Boeing-747") );
+		addAvion( new Avion("LA-B-787","Boeing 787-9") );
+		addAvion( new Avion("LA-B-767","Boeing 767-300") );
+		
+	}
+	
+	
+	
+
+	public ListaAviones getListaAviones() {
+		
+		return listaAviones;
+		
+	}
+
+	private void setListaAviones(ListaAviones listaAviones) {
+		
+		this.listaAviones = listaAviones;
+		
+	}
+
+	private Thread getRecepcion() {
+		
+		return recepcion;
+		
+	}
+
+	private void setRecepcion(Thread recepcion) {
+		
+		this.recepcion = recepcion;
+		
+	}
+
+	private Thread getDespegue() {
+		
+		return despegue;
+		
+	}
+
+	private void setDespegue(Thread despegue) {
+		
+		this.despegue = despegue;
+		
 	}
 	
 }
