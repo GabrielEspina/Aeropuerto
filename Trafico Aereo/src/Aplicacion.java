@@ -8,7 +8,7 @@ public class Aplicacion {
 		Thread recepcion = new Thread(new Recepcion());
 		Thread aterrizaje = new Thread(new Aterrizaje(new Avion("LA-A-350","Airbus 350")));
 		
-		
+		//IUYILI
 		//en un while recibe mas de un aeropuerto
 		recepcion.start();
 		aterrizaje.start();
