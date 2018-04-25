@@ -2,6 +2,7 @@ package ar.edu.ub.p3.aeropuerto.comunicacionTA;
 
 public class ConexionTraficoAereo {
 
+	// Campos temporales para poder configurar luego los aeropuertos [2018/04/25 wduartes]
 	private String 	ipTraficoAereo;
 	private int 	puertoEscritura;
 	private int 	puertoEscucha;
@@ -20,12 +21,14 @@ public class ConexionTraficoAereo {
 		
 		//TODO enviar un mensaje al trafico aereo para agregarme a la lista de aeropuertos
 		//     para que sepa en que puertos escucho para poder mandarme aviones
-		
-		//TODO Creo el thread que vigila la lista de aviones para saber cuales tienen que despegar
-		this.setHiloDespegues( Despegue.crearHilo( this.getAeropuerto(), this.getIpTraficoAereo(), this.getPuertoEscritura() ) );
-		
+		//     Con esa informacion, recien puedo crear los otros thread [2018/04/25 wduartes]
+	
 		//TODO Creo el thread que se encarga de escuchar si llegan aviones
 		this.setHiloAterrizajes( Recepcion.crearHilo( this.getAeropuerto(), this.getPuertoEscucha() ) );
+	
+		//TODO Creo el thread que vigila la lista de aviones para saber cuales tienen que despegar
+		this.setHiloDespegues( Despegue.crearHilo( this.getAeropuerto(), this.getIpTraficoAereo(), this.getPuertoEscritura() ) );
+	
 	}
 	
 	private String getIpTraficoAereo() {

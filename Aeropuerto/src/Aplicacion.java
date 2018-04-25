@@ -9,7 +9,8 @@ public class Aplicacion {
 		
 		Aeropuerto aeropuerto = Aeropuerto.crearAeropuertoCfg1( );
 		
-		aeropuerto.connectTraficoAereo(  );
+		//Pido conexion a un TA [2018/04/25 wduartes]
+		aeropuerto.connectTraficoAereo( "localhost", 8888, 8889 );
 		
 	}
 

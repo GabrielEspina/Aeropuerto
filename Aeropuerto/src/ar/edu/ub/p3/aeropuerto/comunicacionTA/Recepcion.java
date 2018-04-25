@@ -4,24 +4,29 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import ar.edu.ub.p3.aeropuerto.aviones.ListaAviones;
 import ar.edu.ub.p3.tpi.api.Avion;
 
 public class Recepcion implements Runnable{
 
-	private ListaAviones listaAviones;
-	private Aeropuerteable aeropuerto;
+//	private ListaAviones listaAviones;
+	private Aeropuerteable aeropuerto;	
+	private int            puertoEscucha;
 	
+	public Recepcion(int puertoEscucha) {		
+		this.setPuertoEscucha(puertoEscucha);
+	}
+/*
 	public Recepcion(ListaAviones listaAviones) {
 
 		setListaAviones(listaAviones);
 		
 	}
+*/
 	
 	@Override
 	public void run() {
 		
-		try( ServerSocket serverSocket = new ServerSocket(8889) )
+		try( ServerSocket serverSocket = new ServerSocket( this.getPuertoEscucha() ) )
 		{		
 			do
 			{
@@ -33,7 +38,7 @@ public class Recepcion implements Runnable{
 				
 				this.getAeropuerto().aterrizar(avion);
 				
-				System.out.println(">Aterrizaje Exitoso> " + avion.getId() + "\t " + avion.getModelo());
+//				System.out.println(">Aterrizaje Exitoso> " + avion.getId() + "\t " + avion.getModelo());
 			}
 			while( true );
 			
@@ -66,7 +71,7 @@ public class Recepcion implements Runnable{
 		}
 */
 	}
-
+/*
 	public ListaAviones getListaAviones() {
 		return listaAviones;
 	}
@@ -74,12 +79,9 @@ public class Recepcion implements Runnable{
 	public void setListaAviones(ListaAviones listaAviones) {
 		this.listaAviones = listaAviones;
 	}
-
-	public static Thread crearHilo(Aeropuerteable aeropuerto, int puertoEscucha) {
-		
-		//TODO darle bola al puerto enviado por parametro
-		
-		Recepcion managerDespegue = new Recepcion( null );
+*/
+	public static Thread crearHilo(Aeropuerteable aeropuerto, int puertoEscucha) {		
+		Recepcion managerDespegue = new Recepcion( puertoEscucha );
 		Thread   hilo = new Thread( managerDespegue );
 		
 		managerDespegue.setAeropuerto( aeropuerto );		
@@ -95,6 +97,14 @@ public class Recepcion implements Runnable{
 
 	private void setAeropuerto(Aeropuerteable aeropuerto) {
 		this.aeropuerto = aeropuerto;
+	}
+
+	private int getPuertoEscucha() {
+		return puertoEscucha;
+	}
+
+	private void setPuertoEscucha(int puertoEscucha) {
+		this.puertoEscucha = puertoEscucha;
 	}
 
 }

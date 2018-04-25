@@ -36,7 +36,7 @@ public class Aeropuerto  implements Aeropuerteable {
 		
 	}
 	
-	public  void connectTraficoAereo() {
+	public  void connectTraficoAereo( String ipTraficoAereo, int puertoEscritura, int puertoEscucha) {
 /*		
 		//CREO LOS HILOS DE RECEPCION Y ENVIO DE AVIONES
 		
@@ -55,7 +55,7 @@ public class Aeropuerto  implements Aeropuerteable {
 		// TODO probablemente esto se tenga que hacer en otro lugar
 		// TODO y los parametros venir de otro lugar
 		
-		this.setTraficoAereo( new ConexionTraficoAereo( this, "localhost", 8888, 8889) );
+		this.setTraficoAereo( new ConexionTraficoAereo( this, ipTraficoAereo, puertoEscritura, puertoEscucha ) );
 	}
 
 	public static Aeropuerto crearAeropuertoCfg1()
@@ -171,17 +171,15 @@ public class Aeropuerto  implements Aeropuerteable {
 	@Override
 	public void pudeDespegarAvion(Avion avion) {
 		
-		//TODO hacer los cambios de estado pertinentes en el avion cuando se marca como en vuelo		
-		avion.setModelo( "[***DESPEGO***]" + avion.getModelo() );
-		System.out.println(avion.getModelo());
+		//TODO hacer los cambios de estado pertinentes en el avion cuando se marca como en vuelo				
+		System.out.println(  "[***DESPEGO***]" + avion.getModelo());
 	}
 
 	@Override
 	public void aterrizar(Avion avion) {
 		
 		//TODO hacer los cambios de estado pertinentes en el avion cuando se marca como aterrizado
-		avion.setModelo( "[***ATERRIZO***]" + avion.getModelo() );
-		System.out.println(avion.getModelo());
+		System.out.println(  "[***ATERRIZO***]" + avion.getModelo());
 	}
 
 	private ConexionTraficoAereo getTraficoAereo() {
