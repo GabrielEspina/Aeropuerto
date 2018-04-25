@@ -8,6 +8,7 @@ public class Aplicacion {
 	@SuppressWarnings("null")
 	public static void main(String[] args) {
 		
+		System.out.println("Soy el trafico aereo\n---------------------------\n");
 		Thread recepcion = new Thread(new Recepcion());
 		Thread aterrizaje = new Thread(new Aterrizaje(new Avion("LA-A-350","Airbus 350")));
 		

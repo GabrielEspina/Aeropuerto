@@ -2,6 +2,8 @@ package ar.edu.ub.p3.aeropuerto;
 
 import ar.edu.ub.p3.tpi.api.Avion;
 import ar.edu.ub.p3.aeropuerto.aviones.*;
+import ar.edu.ub.p3.aeropuerto.comunicacionTA.Aeropuerteable;
+import ar.edu.ub.p3.aeropuerto.comunicacionTA.ConexionTraficoAereo;
 import ar.edu.ub.p3.aeropuerto.comunicacionTA.Despegue;
 import ar.edu.ub.p3.aeropuerto.comunicacionTA.Recepcion;
 
@@ -14,13 +16,14 @@ import ar.edu.ub.p3.aeropuerto.comunicacionTA.Recepcion;
  *
  */
 
-public class Aeropuerto {
+public class Aeropuerto  implements Aeropuerteable {
 	
 	private ListaAviones listaAviones;
 	
-	private Thread recepcion;
+//	private Thread recepcion;	
+//	private Thread despegue;
 	
-	private Thread despegue;
+	private ConexionTraficoAereo traficoAereo;
 	
 	private Aeropuerto()
 	{
@@ -34,7 +37,7 @@ public class Aeropuerto {
 	}
 	
 	public  void connectTraficoAereo() {
-		
+/*		
 		//CREO LOS HILOS DE RECEPCION Y ENVIO DE AVIONES
 		
 		this.setDespegue(new Thread(new Despegue(listaAviones)));
@@ -47,7 +50,12 @@ public class Aeropuerto {
 		this.getDespegue().start();
 		
 		this.getRecepcion().start();
+*/
 		
+		// TODO probablemente esto se tenga que hacer en otro lugar
+		// TODO y los parametros venir de otro lugar
+		
+		this.setTraficoAereo( new ConexionTraficoAereo( this, "localhost", 8888, 8889) );
 	}
 
 	public static Aeropuerto crearAeropuertoCfg1()
@@ -129,7 +137,7 @@ public class Aeropuerto {
 		this.listaAviones = listaAviones;
 		
 	}
-
+/*
 	private Thread getRecepcion() {
 		
 		return recepcion;
@@ -152,6 +160,36 @@ public class Aeropuerto {
 		
 		this.despegue = despegue;
 		
+	}
+*/
+	@Override
+	public Avion[] obtenerAvionesParaDespegar() {		
+		// TODO Pido la lista de aviones listos para despegar
+		return this.getListaAviones().getAviones().toArray( new Avion[ this.getListaAviones().getAviones().size() ] );
+	}
+
+	@Override
+	public void pudeDespegarAvion(Avion avion) {
+		
+		//TODO hacer los cambios de estado pertinentes en el avion cuando se marca como en vuelo		
+		avion.setModelo( "[***DESPEGO***]" + avion.getModelo() );
+		System.out.println(avion.getModelo());
+	}
+
+	@Override
+	public void aterrizar(Avion avion) {
+		
+		//TODO hacer los cambios de estado pertinentes en el avion cuando se marca como aterrizado
+		avion.setModelo( "[***ATERRIZO***]" + avion.getModelo() );
+		System.out.println(avion.getModelo());
+	}
+
+	private ConexionTraficoAereo getTraficoAereo() {
+		return traficoAereo;
+	}
+
+	private void setTraficoAereo(ConexionTraficoAereo traficoAereo) {
+		this.traficoAereo = traficoAereo;
 	}
 	
 }
