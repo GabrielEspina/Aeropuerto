@@ -35,7 +35,7 @@ Codigo que estaba en el otro main
 			aeropuerto[i].start();
 		}
 		
-		for(int i = 0 ; i<2; i++){
+		for(int i = 0 ; i<2; i++){ 
 			aeropuerto[i].join();;
 		}
 		  
