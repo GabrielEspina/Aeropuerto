@@ -26,7 +26,7 @@ public class Despegue implements Runnable{
 			this.setIpTraficoAereo(ipTraficoAereo);
 			this.setPuertoEscritura(puertoEscritura);
 	}
-
+  
 	@Override
 	public void run() {
 		

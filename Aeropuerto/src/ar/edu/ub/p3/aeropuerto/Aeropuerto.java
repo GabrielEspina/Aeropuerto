@@ -35,7 +35,7 @@ public class Aeropuerto  implements Aeropuerteable {
 		getListaAviones().agreagarAvion( avion );
 		
 	}
-	
+	 
 	public  void connectTraficoAereo( String ipTraficoAereo, int puertoEscritura, int puertoEscucha) {
 /*		
 		//CREO LOS HILOS DE RECEPCION Y ENVIO DE AVIONES

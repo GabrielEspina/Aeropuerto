@@ -16,7 +16,7 @@ public class Aplicacion {
 		listaAviones.agreagarAvion( new Avion("LA-B-747","Boeing-747") );
 		listaAviones.agreagarAvion( new Avion("LA-B-787","Boeing 787-9") );
 		listaAviones.agreagarAvion( new Avion("LA-B-767","Boeing 767-300") );
-*/		
+*/		 
 		Thread recepcion = new Thread(new Recepcion(listaAviones));
 		
 		// Solo hay un hilo en el trafico aereo para escuchar los aviones

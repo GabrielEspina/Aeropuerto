@@ -20,7 +20,7 @@ public class Recepcion implements Runnable {
 		setListaAviones(listaAviones);
 		
 	}
-	
+	  
 	@Override
 	public void run() {
 		
